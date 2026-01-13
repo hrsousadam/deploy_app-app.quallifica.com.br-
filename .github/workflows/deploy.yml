@@ -1,8 +1,8 @@
-name: Deploy (Vite) to cPanel via FTP
+name: Deploy (Vite) to cPanel via SSH
 
 on:
   push:
-    branches: ["main"] # se seu branch principal for outro, troque aqui
+    branches: ["main"]
 
 jobs:
   build-and-deploy:
@@ -24,18 +24,27 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Opcional: ver o que foi gerado
-      - name: List dist
-        run: ls -la dist
-
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      # (Opcional) garante que a pasta existe e limpa a pasta remota antes do upload
+      - name: Prepare remote dir (clean)
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: dist/
-          server-dir: ${{ secrets.FTP_REMOTE_DIR }}
-          protocol: ftps
-          port: 21
-          dangerous-clean-slate: true
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            mkdir -p "${{ secrets.SSH_REMOTE_DIR }}"
+            rm -rf "${{ secrets.SSH_REMOTE_DIR }}"/*
+            rm -rf "${{ secrets.SSH_REMOTE_DIR }}"/.[!.]*
+            rm -rf "${{ secrets.SSH_REMOTE_DIR }}"/..?*
+
+      - name: Upload dist via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "dist/*"
+          target: ${{ secrets.SSH_REMOTE_DIR }}
+          strip_components: 1
