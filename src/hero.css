@@ -1,0 +1,136 @@
+/* Fundo do hero – leve gradiente para dar profundidade */
+.hero-section {
+  position: relative;
+  background: radial-gradient(
+      circle at top left,
+      rgba(37, 99, 235, 0.12),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(16, 185, 129, 0.1),
+      transparent 60%
+    );
+}
+
+/* Wrapper do painel – controla glow externo */
+.hero-panel-wrapper {
+  position: relative;
+}
+
+/* Glow embaixo do painel (premium vibes) */
+.hero-panel-wrapper::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -42px;
+  height: 90px;
+  background: radial-gradient(
+    circle at center,
+    rgba(16, 185, 129, 0.55),
+    transparent 70%
+  );
+  filter: blur(26px);
+  opacity: 0.9;
+  z-index: -1;
+}
+
+/* Título com quebras de linha e caret piscando */
+.hero-heading-typewriter {
+  position: relative;
+  white-space: pre-line;
+}
+
+.hero-heading-typewriter::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  border-right: 2px solid #22c55e;
+  animation: hero-caret 0.8s steps(1) infinite;
+  transform: translateY(3px);
+}
+
+@keyframes hero-caret {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Banner flutuante abaixo do painel */
+.hero-banner-floating {
+  margin-top: 18px;
+}
+
+.hero-banner-content {
+  backdrop-filter: blur(16px);
+}
+
+/* Animação de entrada do banner */
+.hero-banner {
+  animation: hero-banner-fade 0.6s ease-out;
+}
+
+@keyframes hero-banner-fade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ====== BARRAS DO PAINEL – PREMIUM ====== */
+
+.hero-bar-wrapper {
+  position: relative;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+/* preenchimento da barra, com gradiente animado + shimmer */
+.hero-bar-fill {
+  position: relative;
+  height: 100%;
+  border-radius: 999px;
+  transform-origin: left center;
+  transition: transform 0.25s ease-out;
+  background-size: 200% 100%;
+  animation: hero-bar-gradient 4s linear infinite;
+}
+
+/* Cores */
+.hero-bar-fill-green {
+  background-image: linear-gradient(90deg, #22c55e, #4ade80, #22c55e);
+}
+
+.hero-bar-fill-blue {
+  background-image: linear-gradient(90deg, #38bdf8, #0ea5e9, #38bdf8);
+}
+
+.hero-bar-fill-emerald {
+  background-image: linear-gradient(90deg, #34d399, #22c55e, #34d399);
+}
+
+/* Shimmer / movimento do gradiente */
+@keyframes hero-bar-gradient {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Leve expansão no hover */
+.hero-bar-wrapper:hover .hero-bar-fill {
+  transform: scaleY(1.15);
+}

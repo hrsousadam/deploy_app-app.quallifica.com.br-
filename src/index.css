@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================== BASE GLOBAL ================== */
+
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background-color: #0f172a; /* fundo dark padrão */
+  color: #e5e7eb;
+}
+
+/* ================== ANIMAÇÕES ================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #10b981;
+  }
+}
+
+.typewriter-effect {
+  overflow: hidden;
+  border-right: 0.15em solid #10b981;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 0.05em;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  width: fit-content;
+}
+
+/* ================== SEÇÕES ESCURAS ================== */
+/* Usadas em Hero, Cursos, Sobre etc. */
+
+.dark-section {
+  background-color: #020617; /* bem escuro */
+  color: #f9fafb;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.dark-section + .dark-section {
+  border-top: 1px solid rgba(59, 130, 246, 0.18);
+}
+
+/* ================== CARDS EM GRADIENTE ================== */
+
+.gradient-card {
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.12),
+    rgba(59, 130, 246, 0.12)
+  );
+}
+
+/* ================== TEMA CLARO (LIGHT MODE) ================== */
+/* Ativado quando o <html> recebe a classe .light-mode pelo Header */
+
+html.light-mode body {
+  background-color: #f5f6f7;
+  color: #0f172a;
+}
+
+/* Seções marcadas como escuras continuam escuras */
+html.light-mode .dark-section {
+  background-color: #020617;
+  color: #f9fafb;
+}
+
+/* textos dentro das dark-section seguem a cor herdada */
+html.light-mode .dark-section h1,
+html.light-mode .dark-section h2,
+html.light-mode .dark-section p,
+html.light-mode .dark-section span {
+  color: inherit;
+}
